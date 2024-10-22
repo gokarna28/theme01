@@ -1,20 +1,17 @@
 <?php
 /**
  * Main template file.
- * 
- * @packege theme01
  */
 ?>
+
 <?php 
 // header 
 get_header();
-?>
 
-
-<div class="content">
-    content
-</div>
-
-<?php 
+if(have_posts()){
+    while(have_posts()){
+        the_post(); // we can use, get_post(); 
+    }
+}
 //footer
 get_footer();
