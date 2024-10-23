@@ -15,3 +15,31 @@ Text Domain: theme01
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
+.navbar {
+  background-color: rgb(247, 247, 247);
+  align-items: center;
+  border-bottom: 0.1px solid rgba(0, 0, 0, 0.1);
+}
+.menu-header-menu-container {
+  /* background-color: yellow; */
+  align-items: center;
+  justify-content: center;
+
+  .header-nav {
+    display: flex;
+    /* background-color: red; */
+    height: 100%;
+    margin-top: 10px;
+    li {
+      font-size: 18px;
+      list-style: none;
+      margin-left: 20px;
+    }
+  }
+}
+
+
+.collapse{
+  display: flex;
+  justify-content: space-between;
+}
