@@ -55,3 +55,9 @@ add_action('wp_enqueue_scripts', 'theme01_enqueue_scripts');
 register_nav_menus(
     array('primary-menu'=>'Header Menu')
 );
+
+//add the thumbnails option to the admin
+add_theme_support('post-thumbnails');
+
+//add the header image option to admin
+add_theme_support('custom-header');
