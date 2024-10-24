@@ -3,7 +3,7 @@
 
 get_header();// call header
 ?>
-
+This is home page
 
 <?php
 

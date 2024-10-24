@@ -1,0 +1,32 @@
+here how we can save the data form post to the json data and use js to use data
+
+<?php
+// Initialize an empty array to hold the posts data
+$posts_data = array();
+
+// Run the loop to capture post details
+while (have_posts()) {
+    the_post(); // Setup post data
+
+    // Capture necessary post data
+    $post_data = array(
+        'title' => get_the_title(),
+        'thumbnail' => get_the_post_thumbnail_url(null, 'medium'),
+        'date' => get_the_date(),
+        'excerpt' => get_the_excerpt(), // If you want to capture the excerpt
+        'link' => get_permalink(), // Add the post link if you want to store the URL
+    );
+
+    // Add the captured data to the array
+    $posts_data[] = $post_data;
+}
+
+// Convert the data into JSON format
+$json_data = json_encode($posts_data);
+
+// Output the JSON data (you can store this or return it as needed)
+echo $json_data;
+?>
+
+
+//problem in comments lists
