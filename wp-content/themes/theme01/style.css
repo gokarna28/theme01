@@ -36,7 +36,11 @@ Use it to make something cool, have fun, and share what you've learned with othe
   list-style: none;
   margin-left: 20px;
   position: relative;
-  color: black;
+}
+
+.header-nav li a:hover {
+  text-decoration: none;
+  color: blue;
 }
 /* //category submenu  */
 .sub-menu {
@@ -46,9 +50,22 @@ Use it to make something cool, have fun, and share what you've learned with othe
   flex-direction: column;
   align-items: center;
   padding: 15px;
-  li{
-    margin: 0;
-  }
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+}
+.sub-menu li {
+  margin: 0;
+  text-decoration: none;
+}
+
+.header-nav li:hover .sub-menu {
+  opacity: 1;
+  visibility: visible;
+}
+/* //active nava menu  */
+.current-menu-item a {
+  color: blue;
 }
 
 .collapse {
@@ -126,18 +143,52 @@ input[type="submit"]:hover {
   flex-wrap: wrap;
 }
 .blog-post-wrapper {
+  display: flex;
+}
+.blog-post-right {
+  width: 70%;
   padding: 20px;
+  /* background-color: yellow; */
+}
+.blog-post-left {
+  background-color: rgb(233, 233, 233);
+  width: 30%;
+  padding: 20px;
+}
+.widget_categories {
+  list-style: none;
+  ul li a {
+    color: black;
+  }
+}
+
+.widget_recent_entries {
+  list-style: none;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    li {
+      background-color: #ffffff;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+  }
+}
+.widget {
+  list-style: none;
+}
+.wp-block-latest-posts__post-title,
+.wp-block-latest-posts__post-date {
+  padding: 10px;
+  margin: 0;
+  color: black;
 }
 .blog-post-pagination {
   padding: 20px;
   .wp-pagenavi {
     font-size: 20px;
   }
-}
-
-/* //active nava menu  */
-.current-menu-item a {
-  color: red;
 }
 
 /* footer  */
@@ -189,15 +240,21 @@ input[type="submit"]:hover {
 
 /* //single-page */
 .single-post-blog-container {
-  padding: 0 20px;
   display: flex;
   .single-post-blog {
     width: 70%;
     padding: 20px 50px;
   }
-  .single-post-related-post {
-    width: 30%;
-    background-color: rgb(234, 234, 234);
+}
+.single-post-related-post {
+  width: 30%;
+  background-color: rgb(234, 234, 234);
+  .widget_recent_entries{
+    margin-bottom: 20px;
     padding: 20px;
   }
+  .wp-block-heading{
+    margin-left: 20px;
+  }
 }
+

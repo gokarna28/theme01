@@ -53,7 +53,7 @@ add_action('wp_enqueue_scripts', 'theme01_enqueue_scripts');
 
 //register menu 
 register_nav_menus(
-    array('primary-menu'=>'Header Menu')
+    array('primary-menu' => 'Header Menu')
 );
 
 //add the thumbnails option to the admin
@@ -61,3 +61,33 @@ add_theme_support('post-thumbnails');
 
 //add the header image option to admin
 add_theme_support('custom-header');
+
+
+//add the widgit option to admin
+function my_custom_sidebars()
+{
+    // primary-sidebar
+    register_sidebar(
+        array(
+            'name' => 'Primary Sidebar',
+            'id' => 'sidebar-1',
+            'description' => 'This is sidebar for the all the pages. ',
+        )
+    );
+
+    // single-page-sidebar
+    register_sidebar(
+        array(
+            'name' => 'Single Page Sidebar',
+            'id' => 'sidebar-2',
+            'description' => 'This is the sidebar for the single page.',
+        )
+    );
+
+}
+
+add_action('widgets_init', 'my_custom_sidebars');
+
+
+// add the background option in the apperence to the admin
+add_theme_support('custom-background');

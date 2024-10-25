@@ -30,7 +30,8 @@ the_post();
     </div>
     <!-- related post  -->
     <div class="single-post-related-post">
-        <p>Realted posts</p>
+        <!-- use to call the widgits dynamically -->
+        <?php dynamic_sidebar('sidebar-2');// id should be pass as paramenter?>
     </div>
 
 </div>
