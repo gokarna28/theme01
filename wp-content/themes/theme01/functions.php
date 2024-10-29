@@ -75,14 +75,14 @@ function my_custom_sidebars()
         )
     );
 
-    // single-page-sidebar
-    register_sidebar(
-        array(
-            'name' => 'Single Page Sidebar',
-            'id' => 'sidebar-2',
-            'description' => 'This is the sidebar for the single page.',
-        )
-    );
+    // // single-page-sidebar
+    // register_sidebar(
+    //     array(
+    //         'name' => 'Single Page Sidebar',
+    //         'id' => 'sidebar-2',
+    //         'description' => 'This is the sidebar for the single page.',
+    //     )
+    // );
 
 }
 
