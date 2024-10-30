@@ -16,5 +16,7 @@
     </div>
     <?php
 } else {
-    echo "No comments";
+        echo "No comments";
+        //comments form here
+        comment_form();
 }

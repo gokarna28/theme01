@@ -83,11 +83,14 @@ function my_custom_sidebars()
     //         'description' => 'This is the sidebar for the single page.',
     //     )
     // );
-
 }
 
 add_action('widgets_init', 'my_custom_sidebars');
 
 
-// add the background option in the apperence to the admin
+// add the background image option in the apperence to the admin
 add_theme_support('custom-background');
+
+
+//add the excerpt option to the admin
+add_post_type_support('page', 'excerpt');

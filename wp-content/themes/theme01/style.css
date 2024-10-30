@@ -270,7 +270,31 @@ padding: 100px;
   /* background-color: red; */
   display: flex;
   align-items: center;
+  gap: 20px;
+  padding: 20px;
+
 }
+.category-card{
+  background-color: rgb(183, 183, 183);
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  text-decoration: none;
+  transition: 0.5s;
+  p{
+    color: black;
+    font-size: 50px;
+    margin: 0;
+  }
+}
+.category-card:hover{
+  text-decoration: none;
+  background-color: rgb(213, 212, 212);
+}
+
 
 /* comments section-template  */
 .avatar{

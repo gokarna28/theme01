@@ -15,16 +15,15 @@ $category = get_categories(array('taxonomy' => 'category'));
     <?php
     foreach ($category as $categoryValue) {
         ?>
-        <div class="category-card">
-            <a href="<?php echo get_category_link($categoryValue->term_id);?>">
-                <p><?php echo $categoryValue->name ?></p>
-            </a>
-        </div>
+        <a class="category-card" href="<?php echo get_category_link($categoryValue->term_id); ?>">
+            <div>
+                <p><?php echo $categoryValue->name ?><span>(<?php echo $categoryValue->count ?>)</span></p>
+            </div>
+        </a>
+
         <?php
     }
     ?>
 </div>
-
 <?php
-
 get_footer(); // call footer
