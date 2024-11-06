@@ -249,65 +249,121 @@ input[type="submit"]:hover {
 .single-post-related-post {
   width: 30%;
   background-color: rgb(234, 234, 234);
-  .widget_recent_entries{
+  .widget_recent_entries {
     margin-bottom: 20px;
     padding: 20px;
   }
-  .wp-block-heading{
+  .wp-block-heading {
     margin-left: 20px;
   }
 }
 
-.error-page{
-font-size: 50px;
-text-align: center;
-height: 100%;
-padding: 100px;
+.error-page {
+  font-size: 50px;
+  text-align: center;
+  height: 100%;
+  padding: 100px;
 }
 
 /* category section  */
-.category-container{
+.category_wrapper{
+  padding: 20px;
+  display: flex;
+  margin-bottom: 50px;
+
+}
+.category-container {
   /* background-color: red; */
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 
 }
-.category-card{
+.category-card {
   background-color: rgb(183, 183, 183);
   padding: 20px;
-  width: 100%;
+  width: 20%;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 300px;
   text-decoration: none;
   transition: 0.5s;
-  p{
+  p {
     color: black;
     font-size: 50px;
     margin: 0;
   }
 }
-.category-card:hover{
+.category-card:hover {
   text-decoration: none;
   background-color: rgb(213, 212, 212);
 }
 
-
 /* comments section-template  */
-.avatar{
+.avatar {
   border-radius: 100px;
 }
-.children{
+.children {
   background-color: rgb(232, 232, 232);
 }
-.reply{
+.reply {
   margin: 0;
   margin-top: 0;
 }
- .comments-section{
+.comments-section {
   margin-top: 20px;
   padding: 20px;
- }
+}
+
+/* movie template  */
+.movie_wrapper{
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom:50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.movie_card_container {
+  /* background-color: red; */
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  gap: 20px;
+  width: 100%;
+}
+.movie_card {
+  background-color: rgb(239, 239, 239);
+  width: 100%;
+  text-decoration: none;
+  list-style: none;
+  font-size: 18px;
+  color: black;
+  transition: 0.5s;
+}
+.movie_card:hover {
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.movie_details{
+  padding: 10px;
+}
+.movie_image {
+  /* background-color: gray; */
+  img{
+width: 100%;  }
+}
+.movie_title {
+  font-size: 30px;
+  font-weight: 500;
+}
+.movie_date{
+  font-size: 16px;
+}
