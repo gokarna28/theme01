@@ -29,7 +29,12 @@ get_header();// call header
 <!-- custom taxonomy -->
  <div class="category_wrapper">
 <?php
-$movieCate = get_terms(['taxonomy' => 'movies_category', 'hide_empty' => false]);
+$movieCate = get_terms(['taxonomy' => 'movies_category', 
+'hide_empty' => false,
+'orderby'=>'name',
+'order'=>'DESC',
+'number'=>4,
+]);
 // echo "<pre>";
 // print_r($movieCate);
 // echo "<pre>";

@@ -4,6 +4,9 @@
     $wpmovie = array(
         'post_type' => 'movies',
         'post_status' => 'publish',
+        'orderby'=>'name',
+        'order'=>'DESC',
+        'number'=>3,
     );
 
     $moviesQuery = new Wp_Query($wpmovie);
