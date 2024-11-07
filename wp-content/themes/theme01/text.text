@@ -30,3 +30,8 @@ echo $json_data;
 
 
 //problem in comments lists
+
+
+
+
+custom taxonomy image, show the data of the category of movie to the taxonomy-movies_category.php,

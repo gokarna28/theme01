@@ -27,33 +27,43 @@ get_header();// call header
 </div> -->
 
 <!-- custom taxonomy -->
- <div class="category_wrapper">
-<?php
-$movieCate = get_terms(['taxonomy' => 'movies_category', 
-'hide_empty' => false,
-'orderby'=>'name',
-'order'=>'DESC',
-'number'=>4,
-]);
-// echo "<pre>";
+<div class="category_wrapper">
+    <?php
+    $movieCate = get_terms([
+        'taxonomy' => 'movies_category',
+        'hide_empty' => false,
+        'orderby' => 'name',
+        'order' => 'ASC',
+        'number' => 4,
+    ]);
+    // echo "<pre>";
 // print_r($movieCate);
 // echo "<pre>";
-?>
-<div class="category-container">
-    <?php
-    foreach ($movieCate as $movie_cate) {
-        ?>
-        <a class="category-card" href="<?php echo get_category_link($movie_cate->term_id); ?>">
-            <div>
-                <p><?php echo $movie_cate->name ?></p>
-            </div>
-        </a>
-
-        <?php
-    }
     ?>
+    <div class="category-container">
+        <?php
+        foreach ($movieCate as $movie_cate) {
+            ?>
+            <a class="category-card" href="<?php echo get_category_link($movie_cate->term_id); ?>">
+                <div class="taxonomy_image">
+                    <?php
+                  $taxonomyImage=  MGC_Custom_Category_Image::get_category_image($movie_cate->term_id);
+                 echo $taxonomyImage;
+                    ?>
+                </div>
+                <div class="taxonomy_name">
+                    <p><?php echo $movie_cate->name ?></p>
+                </div>
+            </a>
+
+            <?php
+        }
+        ?>
+    </div>
 </div>
-</div>
+
+
+
 
 <!-- latest movies section  -->
 <div class="movie_wrapper">
