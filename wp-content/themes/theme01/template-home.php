@@ -4,71 +4,52 @@
 get_header();// call header
 ?>
 
-<?php
-//returns the category 
-//$category = get_categories(array('taxonomy' => 'category'));
-// echo "<pre>";
-// print_r($category);
-// echo "</pre>";
-?>
-<!-- <div class="category-container">
-    <?php
-    // foreach ($category as $categoryValue) {
-    ?>
-        <a class="category-card" href="<? php// echo get_category_link($categoryValue->term_id); ?>">
-            <div>
-                <p><?php //echo $categoryValue->name ?><span>(<?php //echo $categoryValue->count ?>)</span></p>
-            </div>
-        </a>
+<!-- movie card container  -->
+<div class="movie_wrapper">
+    <h2>Popular Movies</h2>
+    <?php //get_template_part('template-parts/movies/latest_movies') ?>
+    <div>
 
-        <?php
-        // }
-        ?>
-</div> -->
 
-<!-- custom taxonomy -->
-<div class="category_wrapper">
-    <?php
-    $movieCate = get_terms([
-        'taxonomy' => 'movies_category',
-        'hide_empty' => false,
-        'orderby' => 'name',
-        'order' => 'ASC',
-        'number' => 4,
-    ]);
-    // echo "<pre>";
-// print_r($movieCate);
-// echo "<pre>";
-    ?>
-    <div class="category-container">
-        <?php
-        foreach ($movieCate as $movie_cate) {
-            ?>
-            <a class="category-card" href="<?php echo get_category_link($movie_cate->term_id); ?>">
-                <div class="taxonomy_image">
-                    <?php
-                  $taxonomyImage=  MGC_Custom_Category_Image::get_category_image($movie_cate->term_id);
-                 echo $taxonomyImage;
-                    ?>
-                </div>
-                <div class="taxonomy_name">
-                    <p><?php echo $movie_cate->name ?></p>
-                </div>
-            </a>
-
+        <div class="movie_card_container">
             <?php
-        }
+            $args = array(
+                'post_type' => 'theme01_movies',
+                'posts_per_page' => 5,
+                'meta_key' => '_theme01_popular_movie',
+                'meta_value' => '1',
+            );
+            $loop = new WP_Query($args);
+            while ($loop->have_posts()) {
+                $loop->the_post();
+                ?>
+                <a href="<?php the_permalink(); ?>" class="movie_card">
+                    <div class="movie_image">
+                        <?php
+                        $image_path = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail');
+                        ?>
+                        <img src="<?php echo $image_path[0]; ?>" alt="movie image">
+                    </div>
+                    <div class="movie_details">
+                        <p class="movie_title"><?php the_title(); ?></p>
+                        <p class="movie_date"><?php echo get_the_date(); ?></p>
+                    </div>
+                </a>
+                <?php
+            }
+            ?>
+
+        </div>
+
+        <?php
+        //}
+        
         ?>
+
     </div>
 </div>
 
 
 
-
-<!-- latest movies section  -->
-<div class="movie_wrapper">
-    <h2>Latest Movies</h2>
-    <?php get_template_part('template-parts/movies/latest_movies') ?>
-</div>
 <?php
 get_footer(); // call footer

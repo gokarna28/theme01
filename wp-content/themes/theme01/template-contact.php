@@ -4,7 +4,7 @@
 get_header(); //header call
 ?>
 <h2>
-<img src="echo get_template_directory_uri();/assets/images/contact-banner.jpg">
+<img style="width:100%; height:500px" src="<?php echo get_template_directory_uri();?>/assets/images/contact-banner.jpg">
 </h2>
 <div>
     <iframe

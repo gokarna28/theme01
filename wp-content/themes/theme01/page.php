@@ -13,7 +13,6 @@ the_post();// read the content as post
 </div>
 
 
-
 <?php
 get_footer();//footer
 ?>

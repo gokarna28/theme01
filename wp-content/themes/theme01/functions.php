@@ -94,3 +94,25 @@ add_theme_support('custom-background');
 
 //add the excerpt option to the admin
 add_post_type_support('page', 'excerpt');
+
+// Register the custom post type
+function theme01_custom_post_type()
+{
+    register_post_type( 
+        'theme01_movies',
+        array(
+            'labels' => array(
+                'name' => __('movies', 'textdomain'),
+                'singular_name' => __('movie', 'textdomain'),
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'movie'), // my custom slug
+            'supports'=>array('title', 'editor', 'thumbnail'),
+        )
+    );
+}
+add_action('init', 'theme01_custom_post_type');
+
+
+

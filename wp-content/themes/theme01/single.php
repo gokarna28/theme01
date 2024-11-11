@@ -12,23 +12,34 @@ the_post();
         <!-- get the content  -->
         <div> <?php the_content(); ?></div>
 
+        <!-- custom fields data file  -->
+        <div class="embed-container">
+            <?php the_field('video'); ?>
+        </div>
+
+        <!-- review from admin  -->
+        <div>
+            <?php
+            if (get_field('review')) {
+                ?>
+                <h3>Reviews</h3>
+                <?php
+                the_field('review');
+            }
+            ?>
+
+        </div>
+
         <!-- comment form start from here  -->
         <div class="comments-section">
             <?php
-            if (comments_open() || get_comments_number()) {
-
-                comments_template('/comments.php');
-
-            } else {
-                echo "no comments are connected";
-            }
-            ;
-
+            comments_template('/comments.php');
             ?>
         </div>
-       
-
+        
     </div>
+
+
     <!-- related post  -->
     <div class="single-post-related-post">
         <!-- use to call the widgits dynamically -->
