@@ -1,16 +1,12 @@
 <?php
-get_header();//call the header
+get_header(); // call the header
 ?>
 
 <div class="movie_card_container">
     <?php
-    $args = array(
-        'post_type' => 'theme01_movies',
-        'posts_per_page' => 10,
-    );
-    $loop = new WP_Query($args);
-    while ($loop->have_posts()) {
-        $loop->the_post();
+    
+    while (have_posts()) {
+        the_post();
         ?>
         <a href="<?php the_permalink(); ?>" class="movie_card">
             <div class="movie_image">
@@ -27,6 +23,5 @@ get_header();//call the header
         <?php
     }
     ?>
+
 </div>
-<?php
-get_footer(); // call the footer

@@ -4,52 +4,46 @@
 get_header();// call header
 ?>
 
-<!-- movie card container  -->
-<div class="movie_wrapper">
-    <h2>Popular Movies</h2>
-    <?php //get_template_part('template-parts/movies/latest_movies') ?>
-    <div>
+<div class="category_wrapper">
+    <h1>Popular Genre</h1>
+    <div class="category-container">
+        <?php
 
+        $genres = get_terms([
+            'taxonomy' => 'Genre',
+            'hide_empty' => false,
+            'meta_query' => array(
+                array(
+                    'key' => '_theme01_popular_genre',
+                    'value' => 1,
+                    'compare' => '=',
+                )
+                ),
+                'number'=> 4,
+        ]);
 
-        <div class="movie_card_container">
-            <?php
-            $args = array(
-                'post_type' => 'theme01_movies',
-                'posts_per_page' => 5,
-                'meta_key' => '_theme01_popular_movie',
-                'meta_value' => '1',
-            );
-            $loop = new WP_Query($args);
-            while ($loop->have_posts()) {
-                $loop->the_post();
+        // echo "<pre>";
+        // print_r($genres);
+        // echo "<pre>";
+
+        if (!empty($genres) && !is_wp_error($genres)) {
+            foreach ($genres as $genre) {
+
+                $genre_movies_link= get_term_link($genre);
+              //  echo $genre_movies_link;
                 ?>
-                <a href="<?php the_permalink(); ?>" class="movie_card">
-                    <div class="movie_image">
-                        <?php
-                        $image_path = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail');
-                        ?>
-                        <img src="<?php echo $image_path[0]; ?>" alt="movie image">
-                    </div>
-                    <div class="movie_details">
-                        <p class="movie_title"><?php the_title(); ?></p>
-                        <p class="movie_date"><?php echo get_the_date(); ?></p>
-                    </div>
+                <a href="<?php echo  $genre_movies_link ;?>" class="genre_card">
+                    <p><?php echo esc_html($genre->name); ?></p>
                 </a>
                 <?php
             }
-            ?>
+        } else {
+            echo "";
+        }
 
-        </div>
-
-        <?php
-        //}
-        
         ?>
-
     </div>
 </div>
-
-
 
 <?php
 get_footer(); // call footer

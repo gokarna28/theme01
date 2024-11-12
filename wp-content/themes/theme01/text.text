@@ -1,66 +1,68 @@
 
-<?php
-//returns the category 
-//$category = get_categories(array('taxonomy' => 'category'));
-// echo "<pre>";
-// print_r($category);
-// echo "</pre>";
-?>
-<!-- <div class="category-container">
+// Register the meta box for Popular Checkbox
+// function theme01_add_popular_meta_box($taxonomy)
+// {
+//     // add_meta_box(
+//     //     'theme01_popular_genre',
+//     //     'Popular Genre',
+//     //     'theme01_popular_meta_box_html',
+//     //     'Genre',
+//     //     'normal',
+//     //     'default'
+//     // );
+//     ?>
+<!-- //     <label for="theme01_popular_genre">
+//         <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php //checked($popular, '1'); ?> />
+//         Mark as Popular
+//     </label> -->
+//     <?php
+// }
+// add_action('genre_add_form_fields', 'theme01_add_popular_meta_box');
+
+
+
+// // Display the checkbox field
+// function theme01_popular_meta_box_html($taxonomy)
+// {
+//     // Get the current value of the checkbox field
+//    // $popular = get_post_meta($post->ID, '_theme01_popular_genre', true);
+
+//     ?>
+<!-- //     <label for="theme01_popular_genre">
+//         <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php //checked($popular, '1'); ?> />
+//         Mark as Popular
+//     </label> -->
     <?php
-    // foreach ($category as $categoryValue) {
-    ?>
-        <a class="category-card" href="<?php // echo get_category_link($categoryValue->term_id); ?>">
-            <div>
-                <p><?php //echo $categoryValue->name ?><span>(<?php //echo $categoryValue->count ?>)</span></p>
-            </div>
-        </a>
+// }
 
-        <?php
-        // }
-        ?>
-</div> -->
+// // Save the value of the checkbox
+// function theme01_save_popular_meta_box($post_id)
+// {
+//     // Check if our nonce is set.
+//     if (!isset($_POST['theme01_popular_nonce_name'])) {
+//         return $post_id;
+//     }
 
-<!-- custom taxonomy -->
-<!-- <div class="category_wrapper"> -->
-    <?php
-    // $movieCate = get_terms([
-    //     'taxonomy' => 'movies_category',
-    //     'hide_empty' => false,
-    //     'orderby' => 'name',
-    //     'order' => 'ASC',
-    //     'number' => 4,
-    // ]);
-    // echo "<pre>";
-// print_r($movieCate);
-// echo "<pre>";
-    ?>
-    <!-- <div class="category-container">
-        <?php
-        //foreach ($movieCate as $movie_cate) {
-            ?>
-            <a class="category-card" href="<?php //echo get_category_link($movie_cate->term_id); ?>">
-                <div class="taxonomy_image">
-                    <?php
-                  //  $taxonomyImage = MGC_Custom_Category_Image::get_category_image($movie_cate->term_id);
-                   // echo $taxonomyImage;
-                    ?>
-                </div>
-                <div class="taxonomy_name">
-                    <p><?php //echo $movie_cate->name ?></p>
-                </div>
-            </a>
+//     $nonce = $_POST['theme01_popular_nonce_name'];
 
-            <?php
-       // }
-        ?> -->
-    </div>
-</div>
+//     // Verify that the nonce is valid.
+//     if (!wp_verify_nonce($nonce, 'theme01_popular_nonce_action')) {
+//         return $post_id;
+//     }
 
+//     // Check if the user has permission to save data
+//     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+//         return $post_id;
+//     }
 
-<!-- latest movies section  -->
-<!-- <div class="movie_wrapper">
-    <h2>Latest Movies</h2>
-    <?php // get_template_part('template-parts/movies/latest_movies') ?>
-</div> -->
+//     if ('theme01_movies' != $_POST['post_type']) {
+//         return $post_id;
+//     }
 
+//     // If the checkbox is checked, save the value as '1', otherwise save it as '0'
+//     $popular = isset($_POST['theme01_popular_movie']) ? '1' : '0';
+
+//     // Save the value
+//     update_post_meta($post_id, '_theme01_popular_movie', $popular);
+// }
+// add_action('save_post', 'theme01_save_popular_meta_box');
