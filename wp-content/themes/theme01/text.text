@@ -1,68 +1,77 @@
-
-// Register the meta box for Popular Checkbox
-// function theme01_add_popular_meta_box($taxonomy)
-// {
-//     // add_meta_box(
-//     //     'theme01_popular_genre',
-//     //     'Popular Genre',
-//     //     'theme01_popular_meta_box_html',
-//     //     'Genre',
-//     //     'normal',
-//     //     'default'
-//     // );
-//     ?>
-<!-- //     <label for="theme01_popular_genre">
-//         <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php //checked($popular, '1'); ?> />
-//         Mark as Popular
-//     </label> -->
-//     <?php
-// }
-// add_action('genre_add_form_fields', 'theme01_add_popular_meta_box');
+// Check if the upload was successful
+        if (!is_wp_error($attachment_id)) {
+            // Delete the previous image if it exists
+            $old_attachment_id = get_term_meta($term_id, '_theme01_taxonomy_image_id', true);
+            if ($old_attachment_id) {
+                wp_delete_attachment($old_attachment_id, true);
+            }
+        }
 
 
 
-// // Display the checkbox field
-// function theme01_popular_meta_box_html($taxonomy)
-// {
-//     // Get the current value of the checkbox field
-//    // $popular = get_post_meta($post->ID, '_theme01_popular_genre', true);
 
-//     ?>
-<!-- //     <label for="theme01_popular_genre">
-//         <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php //checked($popular, '1'); ?> />
-//         Mark as Popular
-//     </label> -->
+
+        // Add image upload field to the 'genere' taxonomy add form
+add_action('genere_add_form_fields', 'genere_add_image_field');
+function genere_add_image_field() {
+    ?>
+    <div class="form-field">
+        <label for="genere_image"><?php _e('Image', 'textdomain'); ?></label>
+        <input type="text" name="genere_image" id="genere_image" value="" />
+        <button class="upload_image_button button"><?php _e('Upload/Add image', 'textdomain'); ?></button>
+        <p class="description"><?php _e('Upload an image for this genere.', 'textdomain'); ?></p>
+    </div>
     <?php
-// }
+}
 
-// // Save the value of the checkbox
-// function theme01_save_popular_meta_box($post_id)
-// {
-//     // Check if our nonce is set.
-//     if (!isset($_POST['theme01_popular_nonce_name'])) {
-//         return $post_id;
-//     }
+// Add image upload field to the 'genere' taxonomy edit form
+add_action('genere_edit_form_fields', 'genere_edit_image_field');
+function genere_edit_image_field($term) {
+    $image = get_term_meta($term->term_id, 'genere_image', true);
+    ?>
+    <tr class="form-field">
+        <th scope="row" valign="top"><label for="genere_image"><?php _e('Image', 'textdomain'); ?></label></th>
+        <td>
+            <input type="text" name="genere_image" id="genere_image" value="<?php echo esc_attr($image); ?>" />
+            <button class="upload_image_button button"><?php _e('Upload/Add image', 'textdomain'); ?></button>
+            <p class="description"><?php _e('Upload an image for this genere.', 'textdomain'); ?></p>
+            <?php if ($image) : ?>
+                <div><img src="<?php echo esc_url($image); ?>" style="max-width: 100px; height: auto;"></div>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php
+}
 
-//     $nonce = $_POST['theme01_popular_nonce_name'];
+// Save the image URL to taxonomy meta
+add_action('created_genere', 'save_genere_image_meta');
+add_action('edited_genere', 'save_genere_image_meta');
+function save_genere_image_meta($term_id) {
+    if (isset($_POST['genere_image'])) {
+        update_term_meta($term_id, 'genere_image', esc_url_raw($_POST['genere_image']));
+    }
+}
 
-//     // Verify that the nonce is valid.
-//     if (!wp_verify_nonce($nonce, 'theme01_popular_nonce_action')) {
-//         return $post_id;
-//     }
+// Enqueue WordPress media uploader
+add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
+function enqueue_media_uploader() {
+    wp_enqueue_media();
+    wp_enqueue_script('genere-media-uploader', get_template_directory_uri() . '/js/genere-media-uploader.js', array('jquery'), null, true);
+}
 
-//     // Check if the user has permission to save data
-//     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-//         return $post_id;
-//     }
-
-//     if ('theme01_movies' != $_POST['post_type']) {
-//         return $post_id;
-//     }
-
-//     // If the checkbox is checked, save the value as '1', otherwise save it as '0'
-//     $popular = isset($_POST['theme01_popular_movie']) ? '1' : '0';
-
-//     // Save the value
-//     update_post_meta($post_id, '_theme01_popular_movie', $popular);
-// }
-// add_action('save_post', 'theme01_save_popular_meta_box');
+// JavaScript for media uploader (place this in your theme's /js/genere-media-uploader.js file)
+jQuery(document).ready(function($) {
+    $('.upload_image_button').click(function(e) {
+        e.preventDefault();
+        var button = $(this),
+            custom_uploader = wp.media({
+                title: 'Select Image',
+                library: { type: 'image' },
+                button: { text: 'Use this image' },
+                multiple: false
+            }).on('select', function() {
+                var attachment = custom_uploader.state().get('selection').first().toJSON();
+                button.prev().val(attachment.url);
+            }).open();
+    });
+});

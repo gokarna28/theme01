@@ -15,6 +15,7 @@ Text Domain: theme01
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
+
 .navbar {
   background-color: rgb(247, 247, 247);
   align-items: center;
@@ -266,11 +267,16 @@ input[type="submit"]:hover {
 }
 
 /* category section  */
+
+.home-template-container{
+  margin-bottom: 0;
+}
 .category_wrapper {
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 50px;
   /* justify-content: center; */
   margin-bottom: 50px;
   h1{
@@ -290,6 +296,7 @@ input[type="submit"]:hover {
 .genre_card{
  background-color: gray;
  width: 30%;
+ height: 300px;
  display: flex;
  align-items: center;
  justify-content: center;
@@ -297,17 +304,48 @@ input[type="submit"]:hover {
  list-style: none;
  color: white;
  transition: 0.3s;
+ position: relative;
  p{
   font-size: 40px;
   color: white;
+  z-index: 2;
  }
 }
 .genre_card:hover{
   text-decoration: none;
   background-color: rgb(188, 186, 186);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.taxonomy_image_container{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+.taxonomy_image_container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1;
+  transition: opacity 0.5s ;
+}
 
+.taxonomy_image_container:hover::before{
+  opacity: 0;
+}
 
 /* comments section-template  */
 .avatar {
@@ -328,26 +366,42 @@ input[type="submit"]:hover {
 /* movie template  */
 .movie_wrapper {
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.movie_pagination_container{
+  /* background-color: red; */
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  padding: 20px;
+}
+.page-numbers{
+border: 1px solid black;
+padding: 5px;
+}
+.page-numbers:hover{
+  text-decoration: none;
+list-style: none;
+}
 .movie_card_container {
   /* background-color: red; */
-  padding: 20px;
+  padding: 50px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin-top: 50px;
+  margin-bottom: 20px;
   gap: 20px;
   width: 100%;
   margin-top: 0;
+
 }
 .movie_card {
   background-color: rgb(239, 239, 239);
-  width: 25%;
-  height: 25%;
+  width: 30%;
+  height: 30%;
   text-decoration: none;
   list-style: none;
   font-size: 18px;
@@ -364,7 +418,7 @@ input[type="submit"]:hover {
 .movie_image {
   background-color: gray;
   width: 100%;
-  height: 20%;
+  height: 200px;
   overflow: hidden;
   img {
     width: 100%;
@@ -374,7 +428,7 @@ input[type="submit"]:hover {
 .movie_details {
   padding: 10px;
   width: 100%;
-  height: 20%;
+  height: 100%;
 }
 .movie_title {
   font-size: 30px;

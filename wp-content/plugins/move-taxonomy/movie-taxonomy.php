@@ -12,8 +12,8 @@
 function theme01_register_taxonomy_genre()
 {
     $labels = array(
-        'name' => _x('Genre', 'taxonomy general name'),
-        'singular_name' => _x('Genre', 'taxonomy singular name'),
+        'name' => _x('genre', 'taxonomy general name'),
+        'singular_name' => _x('genre', 'taxonomy singular name'),
         'search_items' => __('Search Genre'),
         'all_items' => __('All Genre'),
         'parent_item' => __('Parent Genre'),
@@ -22,7 +22,7 @@ function theme01_register_taxonomy_genre()
         'update_item' => __('Update Genre'),
         'add_new_item' => __('Add New Genre'),
         'new_item_name' => __('New Genre Name'),
-        'menu_name' => __('Genre'),
+        'menu_name' => __('genre'),
     );
     $args = array(
         'hierarchical' => true,
@@ -30,9 +30,9 @@ function theme01_register_taxonomy_genre()
         'show_ui' => true,
         'show_admin_column' => true,
         'query_var' => true,
-        'rewrite' => ['slug' => 'course'],
+        'rewrite' => ['slug' => 'genre'],
     );
-    register_taxonomy('Genre', ['theme01_movies'], $args);
+    register_taxonomy('genre', ['theme01_movies'], $args);
 }
 add_action('init', 'theme01_register_taxonomy_genre');
 

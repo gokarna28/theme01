@@ -96,11 +96,15 @@ function theme01_custom_post_type()
         'theme01_movies',
         array(
             'labels' => array(
-                'name' => __('movies', 'textdomain'),
-                'singular_name' => __('movie', 'textdomain'),
+                'name' => __('Movies', 'textdomain'),
+                'singular_name' => __('Movie', 'textdomain'),
+                'menu_name' => __('movies', 'text_domain'),
             ),
             'public' => true,
             'has_archive' => true,
+            'show_in_admin_bar' => true,
+            'menu_position' => 5,
+            'show_in_admin' => true,
             'rewrite' => array('slug' => 'movie'), // my custom slug
             'supports' => array('title', 'editor', 'thumbnail'),
         )
@@ -116,11 +120,19 @@ add_action('init', 'theme01_custom_post_type');
 function theme01_add_genre_custom_field()
 {
     ?>
-    <div class="custom_taxonomy_image">
-        <label for="theme01_taxonomy_image">
-            <input type="file" id="theme01_taxonomy_image" name="them01_taxonomy_image" accept="image/png, image/jpeg" />
-        </label>
-    </div>
+    <tr class="custom_taxonomy_image">
+        <td> <label for="theme01_taxonomy_image">
+                <input type="file" name="theme01_taxonomy_image" />
+            </label></td>
+    </tr>
+
+    <div class="form-field">
+         <label for="genere_image"><?php _e('Image', 'textdomain'); ?></label>
+         <input type="text" name="genere_image" id="genere_image" value="" />
+         <button class="upload_image_button button"><?php _e('Upload/Add image', 'textdomain'); ?></button>
+         <p class="description"><?php _e('Upload an image for this genere.', 'textdomain'); ?></p>
+     </div>
+
     <label for="theme01_popular_genre">
         <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" />
         Mark as Popular
@@ -128,7 +140,7 @@ function theme01_add_genre_custom_field()
 
     <?php
 }
-add_action('Genre_add_form_fields', 'theme01_add_genre_custom_field');
+add_action('genre_add_form_fields', 'theme01_add_genre_custom_field');
 
 
 //For the edit screen    
@@ -137,84 +149,101 @@ function theme01_edit_genre_custom_field($term)
     //Get the current value of the checkbox field
     $popular = get_term_meta($term->term_id, '_theme01_popular_genre', true);
 
-    // $image_id = get_term_meta($term->term_id, '_theme01_taxonomy_image_id', true);
-    //var_dump($image_id);
-
-    // $image_url = wp_get_attachment_url($image_id);
-    //var_dump($image_url);
+    //get the current image id and url if available
+    $image_id = get_term_meta($term->term_id, '_theme01_taxonomy_image_id', true);
+    $image_url = wp_get_attachment_url($image_id);
     ?>
-    <div class="custom_taxonomy_image">
-        <label for="theme01_taxonomy_image"> Upload Imgage</label>
-        <!-- <input type="file" id="theme01_taxonomy_image" name="theme01_taxonomy_image"  /> -->
 
-        <?php
-        // if ($image_url) {
-        //     ?>
-        <!-- //     <div>
-        //         <img src="<?php //echo $image_url; ?>" alt="Genre Image" style="max-width: 150px; height: auto;">
-        //     </div> -->
-             <?php
-        // } else {
-        //     echo "";
-        // }
+    <!-- input field for image upload -->
+    <?php
+    if ($image_url) {
+        // echo $image_url;
+        // echo $image_id;
         ?>
-<input type="file" class="inv_custom_image" name="custom_image_upload" required>
-    </div>
+        <tr>
+            <td><img src="<?php echo $image_url; ?>" alt="Genre Image" style="max-width: 150px; height: auto;"></td>
+        </tr>
+        <?php
+    }
+    ?>
 
-    <label for=" theme01_popular_genre">
-        <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php checked($popular, '1'); ?> />
-        Mark as Popular
-    </label>
+    <tr class="form-field">
+        <td>
+            <lable for="theme01_taxonomy_image">Upload Imgae:</lable>
+            <input type="file" name="theme01_taxonomy_image" />
+        </td>
+    </tr>
+
+
+    <!-- input field Checkbox -->
+    <tr>
+        <td> <label for=" theme01_popular_genre">
+                <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php checked($popular, '1'); ?> />
+                Mark as Popular
+            </label>
+        </td>
+    </tr>
     <?php
 }
-add_action('Genre_edit_form_fields', 'theme01_edit_genre_custom_field');
+add_action('genre_edit_form_fields', 'theme01_edit_genre_custom_field');
 
 
+
+
+// add the enctype to the form dynamically
+add_action('admin_footer', function () {
+    ?>
+    <script type="text/javascript">
+        document.addEventListner("DOMContentLoaded", () => {
+            document.querySelector('form#edittag').setAttribute('enctype', 'multipart/form-data');
+
+            document.querySelector('form#addtag').setAttribute('enctype', 'multipart/form-data');
+        })
+
+
+    </script>
+    <?php
+});
 
 
 //save the custom field value for the "Genre" taxonomy
 function theme01_save_genre_custom_field($term_id)
 {
-
+    // echo ' enctype="multipart/form-data"';
+    //update the checkbox field as popular
     if (isset($_POST['theme01_popular_genre'])) {
         update_term_meta($term_id, '_theme01_popular_genre', $_POST['theme01_popular_genre']);
     } else {
         delete_term_meta($term_id, '_theme01_popular_genre');
     }
-// Handle the image upload
-if (isset($_FILES['custom_image_upload']) && !empty($_FILES['custom_image_upload']['name'])) {
-    die('dsfds');
-    // Include WordPress file handling functions
-    require_once(ABSPATH . 'wp-admin/includes/file.php');
-    require_once(ABSPATH . 'wp-admin/includes/media.php');
-    require_once(ABSPATH . 'wp-admin/includes/image.php');
 
-    // Handle the upload
-    $upload_overrides = array('test_form' => false);
-    $uploaded_file = wp_handle_upload($_FILES['custom_image_upload'], $upload_overrides);
+    //die("gkdsfjk");
+    //update the input field for image
 
-    if ($uploaded_file && !isset($uploaded_file['error'])) {
-        // Get the file type
-        $file_type = wp_check_filetype(basename($uploaded_file['file']), null);
-        // Prepare the attachment data
-        $attachment_data = array(
-            'guid'           => $uploaded_file['url'],
-            'post_mime_type' => $file_type['type'],
-            'post_title'     => sanitize_file_name(basename($uploaded_file['file'])),
-            'post_content'   => '',
-            'post_status'    => 'inherit'
-        );
-        // Insert the attachment
-        $attachment_id = wp_insert_attachment($attachment_data, $uploaded_file['file']);
-        // Save the attachment ID as term meta
+    if (!empty($_FILES['theme01_taxonomy_image']['name'])) {
+
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+        $attachment_id = media_handle_upload('theme01_taxonomy_image', 0);
+        //update the term meta
         update_term_meta($term_id, '_theme01_taxonomy_image_id', $attachment_id);
-    } else {
-        // Handle error during upload
-        echo "Error uploading image: " . $uploaded_file['error'];
+
     }
+
 }
-    }
+add_action('edited_genre', 'theme01_save_genre_custom_field');
+add_action('created_genre', 'theme01_save_genre_custom_field');
 
 
-add_action('edited_Genre', 'theme01_save_genre_custom_field');
-// add_action('created_Genre', 'theme01_save_genre_custom_field');
+
+
+
+
+
+
+
+
+
+
