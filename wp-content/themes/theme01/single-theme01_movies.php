@@ -9,8 +9,8 @@ get_header(); // call the header
             <?php if (has_post_thumbnail()): ?>
                 <div class="movie-thumbnail">
                     <?php
-                        $featured_image= get_the_post_thumbnail_url();
-                        //echo $featured_image;
+                    $featured_image = get_the_post_thumbnail_url();
+                    //echo $featured_image;
                     ?>
                     <img src="<?php echo $featured_image; ?>" />
                 </div>

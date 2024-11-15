@@ -11,25 +11,8 @@ the_post();
         <p><?php echo get_the_date(); ?></p>
         <!-- get the content  -->
         <div> <?php the_content(); ?></div>
-
-        <!-- custom fields data file  -->
-        <div class="embed-container">
-            <?php the_field('video'); ?>
-        </div>
-
-        <!-- review from admin  -->
-        <div>
-            <?php
-            if (get_field('review')) {
-                ?>
-                <h3>Reviews</h3>
-                <?php
-                the_field('review');
-            }
-            ?>
-
-        </div>
-
+   
+       
         <!-- comment form start from here  -->
         <div class="comments-section">
             <?php

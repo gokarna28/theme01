@@ -75,3 +75,57 @@ jQuery(document).ready(function($) {
             }).open();
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+//For the edit screen    
+function theme01_edit_genre_custom_field($term)
+{
+    //Get the current value of the checkbox field
+    $popular = get_term_meta($term->term_id, '_theme01_popular_genre', true);
+
+    //get the current image id and url if available
+    $image_id = get_term_meta($term->term_id, '_theme01_taxonomy_image_id', true);
+    $image_url = wp_get_attachment_url($image_id);
+    ?>
+
+    <!-- input field for image upload -->
+    <?php
+    if ($image_url) {
+        // echo $image_url;
+        // echo $image_id;
+        ?>
+        <tr>
+            <td><img src="<?php echo $image_url; ?>" alt="Genre Image" style="max-width: 150px; height: auto;"></td>
+        </tr>
+        <?php
+    }
+    ?>
+
+    <tr class="form-field">
+        <td>
+            <lable for="theme01_taxonomy_image">Upload Imgae:</lable>
+            <input type="file" name="theme01_taxonomy_image" />
+        </td>
+    </tr>
+
+
+    <!-- input field Checkbox -->
+    <tr>
+        <td> <label for=" theme01_popular_genre">
+                <input type="checkbox" id="theme01_popular_genre" name="theme01_popular_genre" value="1" <?php checked($popular, '1'); ?> />
+                Mark as Popular
+            </label>
+        </td>
+    </tr>
+    <?php
+}
+add_action('genre_edit_form_fields', 'theme01_edit_genre_custom_field');

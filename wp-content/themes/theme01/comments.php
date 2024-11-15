@@ -1,4 +1,5 @@
-<?php if (have_comments()) {
+<?php
+if (have_comments()) {
     ?>
     <ol class="comment-list">
         <?php
@@ -11,12 +12,13 @@
         ));
         ?>
     </ol><!-- .comment-list -->
-    <div>
-        <?php comment_form(); //returns the comment form ?>
-    </div>
     <?php
 } else {
-        echo "No comments";
-        //comments form here
-        comment_form();
+    echo "<p>No comments yet. Be the first to comment!</p>";
 }
+
+// Display the comment form regardless of whether there are comments
+?>
+<div>
+    <?php comment_form(); ?>
+</div>

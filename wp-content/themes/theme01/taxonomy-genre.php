@@ -28,7 +28,7 @@ get_header();// call the header
             )
         );
 
-   
+
         $loop = new WP_Query($args);
 
         if (have_posts()) {

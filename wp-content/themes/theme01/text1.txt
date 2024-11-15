@@ -1,0 +1,103 @@
+
+// Add the gallery meta box
+function theme01_add_gallery_meta_box()
+{
+    add_meta_box(
+        'product_gallery',
+        'Product Gallery',
+        'theme01_gallery_meta_box_callback',
+        'products',
+        'normal',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'theme01_add_gallery_meta_box');
+
+
+// Callback function for the gallery meta box
+function theme01_gallery_meta_box_callback($post)
+{
+    // Retrieve saved gallery images if any
+    $gallery = get_post_meta($post->ID, '_product_gallery', true);
+
+    // print_r($gallery);
+
+    ?>
+    <div>
+        <button type="button" class="button" id="upload_gallery_button">Add Gallery Images</button>
+        <ul id="gallery_preview" style="margin-top: 10px;">
+            <?php
+            if ($gallery) {
+                foreach ($gallery as $image_id) {
+                    $img_url = wp_get_attachment_image_url($image_id, 'thumbnail');
+                    echo '<li style="display: inline-block; margin-right: 10px;">';
+                    echo '<img src="' . esc_url($img_url) . '" style="max-width: 100px;" />';
+                    echo '<input type="hidden" name="product_gallery[]" value="' . esc_attr($image_id) . '" />';
+                    echo '<button type="button" class="remove-image button">Remove</button>';
+                    echo '</li>';
+                }
+            }
+            ?>
+        </ul>
+    </div>
+    <script>
+        jQuery(document).ready(function ($) {
+            let frame;
+            $('#upload_gallery_button').on('click', function (e) {
+                e.preventDefault();
+
+                if (frame) {
+                    frame.open();
+                    return;
+                }
+
+                frame = wp.media({
+                    title: 'Select or Upload Gallery Images',
+                    button: {
+                        text: 'Add to Gallery'
+                    },
+                    multiple: true
+                });
+
+                frame.on('select', function () {
+                    const attachments = frame.state().get('selection').toJSON();
+                    attachments.forEach(function (attachment) {
+                        $('#gallery_preview').append(`
+                                                    <li style="display: inline-block; margin-right: 10px;">
+                                                        <img src="${attachment.sizes.thumbnail.url}" style="max-width: 100px;" />
+                                                        <input type="hidden" name="product_gallery[]" value="${attachment.id}" />
+                                                        <button type="button" class="remove-image button">Remove</button>
+                                                    </li>
+                                                `);
+                    });
+                });
+
+                frame.open();
+            });
+
+            // Remove images from gallery preview
+            $('#gallery_preview').on('click', '.remove-image', function (e) {
+                e.preventDefault();
+                $(this).parent().remove();
+            });
+        });
+    </script>
+
+
+    <?php
+}
+
+
+// Save gallery images
+function theme01_save_gallery_meta($post_id)
+{
+    if (isset($_POST['product_gallery'])) {
+        $gallery_ids = array_map('intval', $_POST['product_gallery']); // Ensure all IDs are integers
+        update_post_meta($post_id, '_product_gallery', $gallery_ids);
+    } else {
+        delete_post_meta($post_id, '_product_gallery');
+    }
+}
+add_action('save_post', 'theme01_save_gallery_meta');
+
+

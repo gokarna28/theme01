@@ -11,7 +11,7 @@ get_header();// call the header
 
         $args = array(
             'post_type' => 'theme01_movies',
-            'posts_per_page' =>6,
+            'posts_per_page' => 6,
             'paged' => $paged
         );
 
@@ -48,7 +48,19 @@ get_header();// call the header
             'base' => str_replace($big, '%#%', get_pagenum_link($big)),
             'format' => '?paged=%#%',
             'current' => max(1, get_query_var('paged')),
-            'total' => $loop->max_num_pages
+            'total' => $loop->max_num_pages,
+            'aria_current' => 'page',
+            'show_all' => false,
+            'prev_next' => true,
+            'prev_text' => __('Previous'),
+            'next_text' => __('Next'),
+            'end_size' => 1,
+            'mid_size' => 2,
+            'type' => 'plain',
+            'add_args' => false,
+            'add_fragment' => '',
+            'before_page_number' => '',
+            'after_page_number' => '',
         ));
         ?>
     </div>

@@ -20,6 +20,8 @@ get_header();// call header
                     )
                 ),
                 'number' => 3,
+                'orderby'=>'id',
+                'order'=>'DESC',
             ]);
 
             // echo "<pre>";
